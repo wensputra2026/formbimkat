@@ -143,11 +143,16 @@ class ExcelExportService
             } else {
                 $no = 1;
                 foreach ($gurus as $guru) {
+                    $nipValue = $guru->nip ? "'" . $guru->nip : '-';
+                    $nikValue = $guru->nik ? "'" . $guru->nik : '-';
+                    $npsnValue = ($guru->sekolah && $guru->sekolah->npsn) ? "'" . $guru->sekolah->npsn : '-';
+
                     $sheet->setCellValue("A{$row}", $no);
                     $sheet->setCellValueExplicit("B{$row}", (string)$guru->nomor_registrasi, DataType::TYPE_STRING);
                     $sheet->setCellValue("C{$row}", $guru->nama);
-                    $sheet->setCellValueExplicit("D{$row}", (string)($guru->nip ?? '-'), DataType::TYPE_STRING);
-                    $sheet->setCellValueExplicit("E{$row}", (string)($guru->nik ?? '-'), DataType::TYPE_STRING);
+                    $sheet->setCellValueExplicit("D{$row}", $nipValue, DataType::TYPE_STRING);
+                    $sheet->setCellValueExplicit("E{$row}", $nikValue, DataType::TYPE_STRING);
+                    $sheet->getStyle("D{$row}:E{$row}")->getNumberFormat()->setFormatCode('@');
                     $sheet->setCellValue("F{$row}", $guru->pangkatGolongan ? $guru->pangkatGolongan->label : '-');
                     
                     // Gaji Pokok
@@ -163,7 +168,8 @@ class ExcelExportService
                     // TPG & Sekolah
                     $sheet->setCellValue("L{$row}", $guru->penerima_tpg ?: '-');
                     $sheet->setCellValue("M{$row}", $guru->sekolah ? $guru->sekolah->nama_sekolah : '-');
-                    $sheet->setCellValueExplicit("N{$row}", (string)($guru->sekolah ? $guru->sekolah->npsn : '-'), DataType::TYPE_STRING);
+                    $sheet->setCellValueExplicit("N{$row}", $npsnValue, DataType::TYPE_STRING);
+                    $sheet->getStyle("N{$row}")->getNumberFormat()->setFormatCode('@');
                     $sheet->setCellValue("O{$row}", $guru->sekolah ? $guru->sekolah->kabupaten : '-');
                     $sheet->setCellValue("P{$row}", $guru->sekolah ? $guru->sekolah->provinsi : '-');
 

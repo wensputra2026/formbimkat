@@ -26,6 +26,10 @@ Route::match(['get', 'post'], '/cek-status', [PublicGuruController::class, 'cekS
     ->middleware('throttle:15,1')
     ->name('guru.cek_status');
 
+// Perbaiki / koreksi formulir data mandiri oleh guru
+Route::get('/perbaiki-data/{nomor_registrasi}', [PublicGuruController::class, 'editMandiri'])->name('guru.edit_mandiri');
+Route::put('/perbaiki-data/{nomor_registrasi}', [PublicGuruController::class, 'updateMandiri'])->name('guru.update_mandiri');
+
 // AJAX ketersediaan NIP/NIK & pencarian sekolah publik
 Route::post('/guru/check-duplicate', [PublicGuruController::class, 'checkDuplicate'])
     ->middleware('throttle:30,1')

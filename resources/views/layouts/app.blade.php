@@ -63,7 +63,6 @@
             <div class="pd-content">
                 @if (session('success'))
                     <div class="pd-alert pd-alert-success">{{ session('success') }}</div>
-                    <script>document.addEventListener('DOMContentLoaded', () => Swal.fire({ icon: 'success', title: 'Berhasil', text: @json(session('success')), confirmButtonColor: '#07823f' }));</script>
                 @endif
                 @if (session('error'))
                     <div class="pd-alert pd-alert-error">{{ session('error') }}</div>
