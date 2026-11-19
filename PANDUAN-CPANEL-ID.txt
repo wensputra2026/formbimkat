@@ -1,0 +1,61 @@
+﻿PANDUAN INSTALASI / PEMBARUAN FORM BIMKAT DI CPANEL
+====================================================
+
+Isi paket
+---------
+- Aplikasi Laravel dan dependensi PHP (vendor) sudah disertakan.
+- Aset frontend hasil build sudah disertakan.
+- Paket ini TIDAK menyertakan .env, kata sandi, data lokal, sesi, log, maupun cache runtime.
+- ZIP ini tidak menjalankan migrasi, seeder, atau truncate database.
+
+PERSYARATAN
+-----------
+- PHP 8.2 atau lebih baru; ekstensi PDO MySQL, mbstring, openssl, fileinfo, xml, ctype, dan curl aktif.
+- Database MySQL yang sudah diimpor.
+- HTTPS aktif untuk data.bimkattts.org.
+
+INSTALASI BARU DENGAN DATABASE YANG SUDAH DIIMPOR
+-------------------------------------------------
+1. Di cPanel > File Manager, unggah ZIP ini ke folder HOME akun, di luar public_html.
+2. Buat folder aplikasi baru, misalnya formbimkat-release, lalu ekstrak ZIP ke folder tersebut.
+   Struktur yang benar: formbimkat-release/app, formbimkat-release/public, formbimkat-release/vendor.
+3. Di cPanel > Domains, atur document root subdomain data.bimkattts.org ke:
+   /home/USERNAME_CPANEL/formbimkat-release/public
+   Folder public saja yang boleh menjadi document root. Jangan arahkan domain ke folder aplikasi induk.
+4. Salin .env.production.example menjadi .env di folder aplikasi (sejajar dengan artisan).
+   Isi DB_DATABASE, DB_USERNAME, DB_PASSWORD memakai nilai dari cPanel > MySQL Databases.
+   DB_HOST umumnya localhost; ikuti nilai host database yang diberikan hosting.
+5. Buat APP_KEY di cPanel Terminal setelah .env tersedia:
+   php artisan key:generate
+   Jangan bagikan isi .env atau APP_KEY. Jika Terminal tidak tersedia, minta hosting mengaktifkannya atau buat APP_KEY secara lokal lalu masukkan sendiri ke .env di cPanel.
+6. Pastikan storage dan bootstrap/cache dapat ditulis oleh PHP (umumnya permission 775).
+7. Di cPanel Terminal, jalankan dari folder aplikasi:
+   php artisan config:clear
+   php artisan view:clear
+   php artisan route:clear
+   php artisan config:cache
+8. Buka https://data.bimkattts.org, lalu cek formulir publik dan /admin/login.
+9. Setelah login, buka /admin/pengaturan. Jika database impor masih menyimpan nama aplikasi lama, atur Nama Aplikasi menjadi "Pendataan Guru BIMAS Katolik" dan Nama Instansi menjadi "Kantor Kementerian Agama Kabupaten Timor Tengah Selatan", lalu simpan.
+
+PENTING UNTUK DATABASE YANG SUDAH ADA
+-------------------------------------
+- Database tidak diubah oleh ZIP ini.
+- Jangan jalankan migrate:fresh, db:wipe, atau db:seed.
+- Jangan jalankan migrate atau seeder pada database impor kecuali sudah dipastikan skema membutuhkan perubahan dan Anda memiliki ekspor cadangan.
+- Jika tabel belum cocok dengan aplikasi, hentikan proses dan buat backup sebelum perubahan skema.
+
+PEMBARUAN APLIKASI YANG SUDAH BERJALAN (AMAN / MUDAH DI-ROLLBACK)
+------------------------------------------------------------------
+1. Ekspor database dari phpMyAdmin dan unduh backup folder aplikasi yang sedang berjalan.
+2. Ekstrak ZIP ini ke folder rilis BARU di luar public_html; jangan menimpa rilis lama.
+3. Salin .env dari rilis lama ke rilis baru. Pertahankan APP_KEY dan semua kredensial database yang sudah benar.
+4. Jika aplikasi menyimpan berkas pengguna, salin storage/app dari rilis lama ke rilis baru. Jangan timpa .env dengan template.
+5. Atur document root subdomain ke folder public pada rilis baru.
+6. Jalankan perintah cache di langkah 7 instalasi baru. Jangan jalankan migrasi/seeder tanpa backup dan pemeriksaan skema.
+7. Periksa situs dan login. Jika ada masalah, kembalikan document root ke folder public rilis lama; database tetap tidak berubah.
+
+KEAMANAN
+--------
+- Jangan unggah .env ke public_html, GitHub, atau membagikannya melalui chat.
+- Jangan mengekstrak folder aplikasi induk di dalam public_html.
+- ZIP ini sengaja tidak membawa .env lokal dan tidak memuat kata sandi hosting/database.

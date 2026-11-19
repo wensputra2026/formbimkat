@@ -1,0 +1,13 @@
+CHECKLIST INSTALASI
+[ ] Buat proyek Laravel 12/13
+[ ] Pastikan Tailwind CSS 3 + Vite terpasang
+[ ] Instal Alpine.js dan @alpinejs/collapse bila belum ada
+[ ] Salin config/premium-navigation.php
+[ ] Salin resources/views/layouts, partials, dashboard
+[ ] Gabungkan CSS premium-dashboard.css ke resources/css/app.css
+[ ] Gabungkan Alpine component ke resources/js/app.js (inisialisasi Alpine satu kali)
+[ ] Gabungkan route contoh ke routes/web.php
+[ ] Sesuaikan route, nama brand, menu, dan role
+[ ] Jalankan npm run build
+[ ] Lindungi route dengan middleware auth/permission
+[ ] Ganti data demo dengan data controller aplikasi

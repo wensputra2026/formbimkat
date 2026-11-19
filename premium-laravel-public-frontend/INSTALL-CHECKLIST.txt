@@ -1,0 +1,15 @@
+CHECKLIST INSTALASI FRONTEND PUBLIC
+[ ] Proyek Laravel 12/13 sudah berjalan
+[ ] Tailwind CSS 3 dan Vite tersedia
+[ ] Alpine.js diinisialisasi satu kali
+[ ] Salin layouts/public.blade.php
+[ ] Salin partials/public-navbar.blade.php dan public-footer.blade.php
+[ ] Salin seluruh views dalam public/
+[ ] Gabungkan public.css ke resources/css/app.css
+[ ] Gabungkan public.js ke resources/js/app.js
+[ ] Gabungkan route contoh ke routes/web.php
+[ ] Sesuaikan nama institusi, logo, kontak, dan tautan
+[ ] Hubungkan form kontak ke Controller dan validasi
+[ ] Ganti konten contoh dengan data aplikasi
+[ ] Jalankan npm run build
+[ ] Uji desktop, tablet, ponsel, Light Mode, dan Dark Mode
