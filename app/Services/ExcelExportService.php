@@ -120,6 +120,12 @@ class ExcelExportService
             ]);
             $sheet->getRowDimension(5)->setRowHeight(32);
 
+            // Format kolom teks murni (agar tidak berubah menjadi angka ilmiah saat diedit)
+            $sheet->getStyle('B')->getNumberFormat()->setFormatCode('@');
+            $sheet->getStyle('D')->getNumberFormat()->setFormatCode('@');
+            $sheet->getStyle('E')->getNumberFormat()->setFormatCode('@');
+            $sheet->getStyle('N')->getNumberFormat()->setFormatCode('@');
+
             // 3. Isi Data
             $row = 6;
             if ($gurus->isEmpty()) {
@@ -143,12 +149,13 @@ class ExcelExportService
             } else {
                 $no = 1;
                 foreach ($gurus as $guru) {
-                    $nipValue = $guru->nip ? "'" . $guru->nip : '-';
-                    $nikValue = $guru->nik ? "'" . $guru->nik : '-';
-                    $npsnValue = ($guru->sekolah && $guru->sekolah->npsn) ? "'" . $guru->sekolah->npsn : '-';
+                    $nipValue = $guru->nip ? (string)$guru->nip : '-';
+                    $nikValue = $guru->nik ? (string)$guru->nik : '-';
+                    $npsnValue = ($guru->sekolah && $guru->sekolah->npsn) ? (string)$guru->sekolah->npsn : '-';
 
                     $sheet->setCellValue("A{$row}", $no);
                     $sheet->setCellValueExplicit("B{$row}", (string)$guru->nomor_registrasi, DataType::TYPE_STRING);
+                    $sheet->getStyle("B{$row}")->getNumberFormat()->setFormatCode('@');
                     $sheet->setCellValue("C{$row}", $guru->nama);
                     $sheet->setCellValueExplicit("D{$row}", $nipValue, DataType::TYPE_STRING);
                     $sheet->setCellValueExplicit("E{$row}", $nikValue, DataType::TYPE_STRING);
