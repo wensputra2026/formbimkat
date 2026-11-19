@@ -40,7 +40,7 @@ return [
         [
             'section' => 'LAPORAN & AUDIT',
             'items' => [
-                ['label' => 'Laporan & Export (6 Sheet)', 'route' => 'admin.report.index', 'icon' => 'chart-no-axes-combined'],
+                ['label' => 'Laporan & Export Excel', 'route' => 'admin.report.index', 'icon' => 'chart-no-axes-combined'],
                 ['label' => 'Riwayat Login', 'route' => 'admin.audit.login', 'icon' => 'user-round'],
                 ['label' => 'Log Aktivitas', 'route' => 'admin.audit.activity', 'icon' => 'files'],
             ],

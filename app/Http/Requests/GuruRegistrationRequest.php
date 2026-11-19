@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Guru;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class GuruRegistrationRequest extends FormRequest
 {
@@ -23,7 +25,7 @@ class GuruRegistrationRequest extends FormRequest
             'kgb_tahun' => ['required', 'integer', 'digits:4', 'min:1900', 'max:2100'],
             'pensiun_bulan' => ['required', 'integer', 'between:1,12'],
             'pensiun_tahun' => ['required', 'integer', 'digits:4', 'min:1900', 'max:2100'],
-            'penerima_tpg' => ['nullable', 'in:Kemenag,Kemenag 2026,Dinas,Dinas 2026,PPPK,PPPK 2026'],
+            'penerima_tpg' => ['nullable', Rule::in(Guru::getTpgChoices())],
             'sekolah_id' => ['required', 'exists:sekolah,id_sekolah'],
         ];
     }

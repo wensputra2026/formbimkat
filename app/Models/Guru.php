@@ -64,6 +64,27 @@ class Guru extends Model
         'PPPK 2026',
     ];
 
+    /**
+     * Dapatkan daftar kategori TPG dinamis:
+     * Menggabungkan 6 kategori standar resmi dengan kategori unik yang ada di database.
+     */
+    public static function getTpgChoices(): array
+    {
+        $default = self::TPG_CHOICES;
+
+        try {
+            $fromDb = static::whereNotNull('penerima_tpg')
+                ->where('penerima_tpg', '!=', '')
+                ->distinct()
+                ->pluck('penerima_tpg')
+                ->toArray();
+
+            return array_values(array_unique(array_merge($default, $fromDb)));
+        } catch (\Throwable) {
+            return $default;
+        }
+    }
+
     public const STATUS_CHOICES = [
         'Menunggu Verifikasi',
         'Disetujui',

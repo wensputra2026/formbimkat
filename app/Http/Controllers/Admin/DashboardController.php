@@ -18,8 +18,8 @@ class DashboardController extends Controller
         $totalSekolah = Sekolah::count();
         $totalPangkat = PangkatGolongan::count();
 
-        // 2. Statistik 6 Kategori TPG
-        $tpgCategories = Guru::TPG_CHOICES;
+        // 2. Statistik Kategori TPG (Dinamis sesuai DB + Pilihan Guru)
+        $tpgCategories = Guru::getTpgChoices();
         $tpgCounts = [];
         foreach ($tpgCategories as $tpg) {
             $tpgCounts[$tpg] = Guru::where('penerima_tpg', $tpg)->count();

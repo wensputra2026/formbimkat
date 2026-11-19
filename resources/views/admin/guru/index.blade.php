@@ -62,7 +62,7 @@
                 <label class="pd-label" style="font-size: 10px;">Kategori TPG</label>
                 <select name="tpg" class="pd-select-field" style="height: 36px; font-size: 11px;">
                     <option value="">Semua TPG</option>
-                    @foreach(\App\Models\Guru::TPG_CHOICES as $tpg)
+                    @foreach(\App\Models\Guru::getTpgChoices() as $tpg)
                         <option value="{{ $tpg }}" {{ request('tpg') == $tpg ? 'selected' : '' }}>{{ $tpg }}</option>
                     @endforeach
                 </select>

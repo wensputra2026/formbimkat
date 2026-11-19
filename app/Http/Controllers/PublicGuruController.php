@@ -21,7 +21,7 @@ class PublicGuruController extends Controller
     public function create()
     {
         $pangkats = PangkatGolongan::where('is_active', true)->orderBy('urutan')->get();
-        $tpgChoices = Guru::TPG_CHOICES;
+        $tpgChoices = Guru::getTpgChoices();
         $bulanChoices = Guru::BULAN;
         $appName = Setting::get('app_name', 'Pendataan Guru Kementerian Agama');
         $instansi = Setting::get('instansi', 'Kantor Kementerian Agama Kabupaten Timor Tengah Selatan');
@@ -172,7 +172,7 @@ class PublicGuruController extends Controller
         }
 
         $pangkats = PangkatGolongan::where('is_active', true)->orderBy('urutan')->get();
-        $tpgChoices = Guru::TPG_CHOICES;
+        $tpgChoices = Guru::getTpgChoices();
         $bulanChoices = Guru::BULAN;
         $appName = Setting::get('app_name', 'Pendataan Guru Kementerian Agama');
         $instansi = Setting::get('instansi', 'Kantor Kementerian Agama Kabupaten Timor Tengah Selatan');
@@ -205,7 +205,7 @@ class PublicGuruController extends Controller
             'kgb_tahun' => ['required', 'integer', 'digits:4', 'min:1900', 'max:2100'],
             'pensiun_bulan' => ['required', 'integer', 'between:1,12'],
             'pensiun_tahun' => ['required', 'integer', 'digits:4', 'min:1900', 'max:2100'],
-            'penerima_tpg' => ['nullable', 'in:Kemenag,Kemenag 2026,Dinas,Dinas 2026,PPPK,PPPK 2026'],
+            'penerima_tpg' => ['nullable', \Illuminate\Validation\Rule::in(Guru::getTpgChoices())],
             'sekolah_id' => ['required', 'exists:sekolah,id_sekolah'],
         ], [
             'nama.required' => 'Nama lengkap wajib diisi.',

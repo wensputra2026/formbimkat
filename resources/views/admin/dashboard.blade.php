@@ -13,7 +13,7 @@
         </div>
         <div class="pd-heading-actions">
             <a href="{{ route('admin.report.export_excel') }}" class="pd-button pd-button-primary">
-                <span>EXPORT EXCEL (6 SHEET)</span>
+                <span>EXPORT EXCEL LENGKAP (MASTER & KATEGORI)</span>
             </a>
             <a href="{{ route('admin.report.export_pdf') }}" target="_blank" class="pd-button pd-button-secondary">
                 <span>Cetak Rekap PDF</span>

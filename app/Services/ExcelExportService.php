@@ -24,7 +24,9 @@ class ExcelExportService
     ];
 
     /**
-     * Export 6 Sheet Excel
+     * Export Master Rekap & Kategori Sheet Excel
+     * Tab 1: Semua Guru (Master Rekapitulasi Lengkap)
+     * Tab 2+: Kategori Penerima TPG (Kemenag, PPPK 2026, Dinas, dsb)
      *
      * @param string|null $statusFilter 'Disetujui' (default), 'Menunggu Verifikasi', 'Ditolak', 'Semua'
      * @return StreamedResponse
@@ -36,16 +38,39 @@ class ExcelExportService
         $instansi = Setting::get('instansi', 'Kantor Kementerian Agama Kabupaten Timor Tengah Selatan');
 
         $spreadsheet = new Spreadsheet();
-        // Remove default sheet
+        // Remove default blank sheet
         $spreadsheet->removeSheetByIndex(0);
 
-        foreach (self::SHEET_CATEGORIES as $index => $category) {
-            $sheet = $spreadsheet->createSheet($index);
-            $sheet->setTitle($category);
+        // Ambil kategori TPG dinamis (menggabungkan standar resmi + DB)
+        $categories = Guru::getTpgChoices();
 
-            // Query data untuk kategori ini
-            $query = Guru::with(['pangkatGolongan', 'sekolah', 'verifier'])
-                ->where('penerima_tpg', $category);
+        // Konfigurasi Sheets: Tab pertama = Semua Guru, disusul per kategori
+        $sheetConfigs = [
+            [
+                'title' => 'Semua Guru',
+                'category' => null,
+                'eyebrow' => 'SEMUA GURU (MASTER REKAPITULASI)',
+            ],
+        ];
+
+        foreach ($categories as $cat) {
+            $sheetConfigs[] = [
+                'title' => substr($cat, 0, 31),
+                'category' => $cat,
+                'eyebrow' => 'KATEGORI: ' . strtoupper($cat),
+            ];
+        }
+
+        foreach ($sheetConfigs as $index => $cfg) {
+            $sheet = $spreadsheet->createSheet($index);
+            $sheet->setTitle($cfg['title']);
+
+            // Query data untuk sheet ini
+            $query = Guru::with(['pangkatGolongan', 'sekolah', 'verifier']);
+
+            if ($cfg['category'] !== null) {
+                $query->where('penerima_tpg', $cfg['category']);
+            }
 
             if ($statusFilter !== 'Semua') {
                 $query->where('status_verifikasi', $statusFilter);
@@ -56,7 +81,7 @@ class ExcelExportService
             // 1. Header Judul
             $sheet->setCellValue('A1', strtoupper($appName));
             $sheet->setCellValue('A2', strtoupper($instansi));
-            $sheet->setCellValue('A3', "KATEGORI: " . strtoupper($category) . " | STATUS: " . strtoupper($statusFilter) . " | TANGGAL CETAK: " . now('Asia/Makassar')->format('d/m/Y H:i:s') . ' WITA');
+            $sheet->setCellValue('A3', "{$cfg['eyebrow']} | STATUS: " . strtoupper($statusFilter) . " | TANGGAL CETAK: " . now('Asia/Makassar')->format('d/m/Y H:i:s') . ' WITA');
 
             $sheet->mergeCells('A1:S1');
             $sheet->mergeCells('A2:S2');
@@ -96,6 +121,7 @@ class ExcelExportService
 
             // Style Header Kolom
             $headerRange = 'A5:S5';
+            $headerColor = ($cfg['category'] === null) ? 'FF0F172A' : 'FF1E3A8A'; // Dark slate for Master, Navy for categories
             $sheet->getStyle($headerRange)->applyFromArray([
                 'font' => [
                     'bold' => true,
@@ -104,7 +130,7 @@ class ExcelExportService
                 ],
                 'fill' => [
                     'fillType' => Fill::FILL_SOLID,
-                    'startColor' => ['argb' => 'FF1E3A8A'], // Navy Blue
+                    'startColor' => ['argb' => $headerColor],
                 ],
                 'alignment' => [
                     'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -129,7 +155,7 @@ class ExcelExportService
             // 3. Isi Data
             $row = 6;
             if ($gurus->isEmpty()) {
-                $sheet->setCellValue('A6', 'Tidak Ada Data');
+                $sheet->setCellValue('A6', 'Tidak Ada Data untuk Kategori Ini');
                 $sheet->mergeCells('A6:S6');
                 $sheet->getStyle('A6:S6')->applyFromArray([
                     'alignment' => [
@@ -149,19 +175,20 @@ class ExcelExportService
             } else {
                 $no = 1;
                 foreach ($gurus as $guru) {
-                    $nipValue = $guru->nip ? (string)$guru->nip : '-';
-                    $nikValue = $guru->nik ? (string)$guru->nik : '-';
-                    $npsnValue = ($guru->sekolah && $guru->sekolah->npsn) ? (string)$guru->sekolah->npsn : '-';
+                    $nipValue = $guru->nip ? ltrim(trim((string)$guru->nip), "'") : '-';
+                    $nikValue = $guru->nik ? ltrim(trim((string)$guru->nik), "'") : '-';
+                    $npsnValue = ($guru->sekolah && $guru->sekolah->npsn) ? ltrim(trim((string)$guru->sekolah->npsn), "'") : '-';
+                    $noRegValue = ltrim(trim((string)$guru->nomor_registrasi), "'");
 
                     $sheet->setCellValue("A{$row}", $no);
-                    $sheet->setCellValueExplicit("B{$row}", (string)$guru->nomor_registrasi, DataType::TYPE_STRING);
+                    $sheet->setCellValueExplicit("B{$row}", $noRegValue, DataType::TYPE_STRING);
                     $sheet->getStyle("B{$row}")->getNumberFormat()->setFormatCode('@');
                     $sheet->setCellValue("C{$row}", $guru->nama);
                     $sheet->setCellValueExplicit("D{$row}", $nipValue, DataType::TYPE_STRING);
                     $sheet->setCellValueExplicit("E{$row}", $nikValue, DataType::TYPE_STRING);
                     $sheet->getStyle("D{$row}:E{$row}")->getNumberFormat()->setFormatCode('@');
                     $sheet->setCellValue("F{$row}", $guru->pangkatGolongan ? $guru->pangkatGolongan->label : '-');
-                    
+
                     // Gaji Pokok
                     $sheet->setCellValue("G{$row}", (float)$guru->gaji_pokok);
                     $sheet->getStyle("G{$row}")->getNumberFormat()->setFormatCode('"Rp "#,##0.00');
@@ -232,6 +259,14 @@ class ExcelExportService
                     ],
                 ]);
                 $sheet->getStyle("A{$totalRow}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+                // Tambahkan petunjuk navigasi jika ini sheet Semua Guru
+                if ($cfg['category'] === null) {
+                    $noteRow = $totalRow + 2;
+                    $sheet->setCellValue("A{$noteRow}", "💡 Petunjuk: Rincian data terpisah per kategori TPG juga tersedia pada masing-masing tab Sheet di bagian bawah: " . implode(', ', $categories));
+                    $sheet->mergeCells("A{$noteRow}:S{$noteRow}");
+                    $sheet->getStyle("A{$noteRow}")->getFont()->setItalic(true)->setSize(10)->getColor()->setARGB('FF475569');
+                }
             }
 
             // Freeze panes di bawah header
@@ -246,7 +281,7 @@ class ExcelExportService
             }
         }
 
-        // Set active sheet ke sheet pertama
+        // Set active sheet ke sheet pertama (Semua Guru)
         $spreadsheet->setActiveSheetIndex(0);
 
         $filename = 'Pendataan_Guru_Kemenag_' . date('Ymd_His') . '.xlsx';

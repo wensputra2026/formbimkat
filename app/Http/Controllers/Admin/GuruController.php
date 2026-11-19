@@ -109,7 +109,7 @@ class GuruController extends Controller
     public function edit(Guru $guru)
     {
         $pangkats = PangkatGolongan::where('is_active', true)->orderBy('urutan')->get();
-        $tpgChoices = Guru::TPG_CHOICES;
+        $tpgChoices = Guru::getTpgChoices();
         $bulanChoices = Guru::BULAN;
 
         return view('admin.guru.edit', compact('guru', 'pangkats', 'tpgChoices', 'bulanChoices'));

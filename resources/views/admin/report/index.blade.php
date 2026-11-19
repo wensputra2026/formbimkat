@@ -11,13 +11,13 @@
         <div>
             <div class="pd-eyebrow">PUSAT REKAPITULASI & DOKUMEN</div>
             <h1>Laporan &amp; Ekspor Data Guru<span class="pd-heading-accent">.</span></h1>
-            <p>Ekspor laporan rekapitulasi data guru ke format Microsoft Excel (.xlsx 6 Sheet) dan dokumen cetak PDF resmi.</p>
+            <p>Ekspor laporan rekapitulasi data guru ke format Microsoft Excel (.xlsx Master Semua & Kategori Sheet) dan dokumen cetak PDF resmi.</p>
         </div>
         <div class="pd-heading-actions">
-            <!-- EXPORT EXCEL 6 SHEET -->
+            <!-- EXPORT EXCEL MASTER & KATEGORI -->
             <a href="{{ route('admin.report.export_excel', ['status' => $statusFilter]) }}" class="pd-button pd-button-primary" style="height: 40px; padding: 0 18px; font-weight: 800;">
                 <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                <span>EXPORT EXCEL (6 SHEET)</span>
+                <span>EXPORT EXCEL LENGKAP (MASTER & KATEGORI)</span>
             </a>
 
             <!-- PRINT / CETAK PDF -->

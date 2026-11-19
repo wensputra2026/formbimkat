@@ -45,7 +45,7 @@ class ReportController extends Controller
         $totalRecords = $query->count();
         $totalGaji = (clone $query)->sum('gaji_pokok');
 
-        $tpgChoices = Guru::TPG_CHOICES;
+        $tpgChoices = Guru::getTpgChoices();
         $pangkats = PangkatGolongan::where('is_active', true)->orderBy('urutan')->get();
         $kabupatens = Sekolah::distinct()->whereNotNull('kabupaten')->pluck('kabupaten');
 
