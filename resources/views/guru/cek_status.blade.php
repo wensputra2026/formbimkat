@@ -12,7 +12,7 @@
         <span class="pub-badge-year">
             <i></i> VERIFIKASI IDENTITAS & STATUS
         </span>
-        <h1 style="margin: 10px 0 0; font-size: clamp(24px, 3.5vw, 30px); font-weight: 800; letter-spacing: -0.03em; color: #ffffff;">
+        <h1 style="margin: 10px 0 0; font-size: clamp(24px, 3.5vw, 30px); font-weight: 800; letter-spacing: -0.03em; color: var(--pub-text, #0f172a);">
             Cek Status Pendataan Guru<span style="color: var(--pub-accent);">.</span>
         </h1>
         <p style="margin: 8px 0 0; color: var(--pub-muted); font-size: 13.5px;">
@@ -96,7 +96,7 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; padding: 10px 0;">
                     <span style="color: #94a3b8;">Sekolah Tempat Tugas:</span>
-                    <strong style="color: #ffffff;">{{ $guruResult['nama_sekolah'] }}</strong>
+                    <strong style="color: var(--pub-text, #0f172a);">{{ $guruResult['nama_sekolah'] }}</strong>
                 </div>
             </div>
         </div>

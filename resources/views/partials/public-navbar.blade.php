@@ -6,8 +6,8 @@
                 <img src="{{ asset('logo-bimas-katolik.png') }}" alt="Logo Kementerian Agama" width="38" height="38">
             </span>
             <span class="pub-brand-text">
-                <strong style="color: #ffffff;">{{ \App\Models\Setting::get('app_name', 'Pendataan Guru.') }}</strong>
-                <small style="color: #94a3b8;">{{ \App\Models\Setting::get('instansi', 'BIMAS Katolik Kantor Kementerian Agama Kabupaten Timor Tengah Selatan') }}</small>
+                <strong style="color: #0f172a;">{{ \App\Models\Setting::get('app_name', 'Pendataan Guru.') }}</strong>
+                <small style="color: #64748b;">{{ \App\Models\Setting::get('instansi', 'BIMAS Katolik Kantor Kementerian Agama Kabupaten Timor Tengah Selatan') }}</small>
             </span>
         </a>
 

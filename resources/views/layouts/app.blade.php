@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#0b0e14">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
     <link rel="icon" type="image/png" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <link rel="apple-touch-icon" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <title>@yield('title', 'Dashboard') — {{ \App\Models\Setting::get('app_name', 'Pendataan Guru.') }}</title>

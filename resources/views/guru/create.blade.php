@@ -14,17 +14,12 @@
                     <i></i> TAHUN PENDATAAN {{ \App\Models\Setting::get('tahun_pendataan', date('Y')) }}
                 </span>
             </div>
-            <h1 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; letter-spacing: -0.03em; color: #ffffff;">
+            <h1 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; letter-spacing: -0.03em; color: var(--pub-text, #0f172a);">
                 Formulir Pendataan Guru Sertifikasi
             </h1>
-            <p style="margin: 4px 0 0; color: var(--pub-muted); font-size: 13px; line-height: 1.6;">
+            <p style="margin: 4px 0 0; color: var(--pub-muted, #64748b); font-size: 13.5px; line-height: 1.6;">
                 Selamat datang di Sistem Pendataan Guru Kementerian Agama. Silakan mengisi formulir data diri dengan lengkap, cermat, dan benar sesuai dokumen resmi Anda. Simpan Nomor Registrasi yang diterbitkan sebagai bukti pengajuan.
             </p>
-            <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; font-size: 12px; color: var(--pub-muted);">
-                <span style="display: inline-flex; align-items: center; gap: 6px;"><strong style="color: var(--pub-success);">✓</strong> Tanpa Perlu Akun Guru</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px;"><strong style="color: var(--pub-success);">✓</strong> Nomor Registrasi Unik Otomatis</span>
-                <span style="display: inline-flex; align-items: center; gap: 6px;"><strong style="color: var(--pub-success);">✓</strong> Validasi Keunikan NIP & NIK</span>
-            </div>
         </div>
     </div>
 
@@ -225,7 +220,7 @@
                     <template x-for="item in results" :key="item.id_sekolah">
                         <div @click="choose(item)" class="pub-search-item">
                             <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                                <strong x-text="item.nama_sekolah" style="color: #ffffff;"></strong>
+                                <strong x-text="item.nama_sekolah" style="color: var(--pub-text, #0f172a);"></strong>
                                 <span class="pub-badge-year" style="font-size: 10px; padding: 2px 8px; flex-shrink: 0;" x-text="item.jenjang || 'Sekolah'"></span>
                             </div>
                             <div style="font-size: 11px; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; color: var(--pub-muted);">

@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light">
     <link rel="icon" type="image/png" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <link rel="apple-touch-icon" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <title>@yield('title', 'Pendataan Guru') — {{ \App\Models\Setting::get('app_name', 'Pendataan Guru.') }}</title>
     <meta name="description" content="@yield('meta_description', 'Pendataan guru penerima TPG Kemenag Kementerian Agama Kab.TTS — Formulir Pendataan Guru Sertifikasi resmi.')">
-    <meta name="theme-color" content="#0b0e14">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- Social Media Sharing Meta Tags (WhatsApp, Facebook, Telegram, Twitter) -->
     <meta property="og:type" content="website">
@@ -39,7 +39,7 @@
 <body id="top" class="public-body premium-body">
     @include('partials.public-navbar')
 
-    <main id="main-content">
+    <main id="main-content" style="padding-top: 76px;">
         @if (session('success'))
             <div class="pub-container" style="padding-top: 24px;">
                 <div class="pd-alert pd-alert-success" style="border-radius: 12px; margin-bottom: 0;">{{ session('success') }}</div>

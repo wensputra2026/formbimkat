@@ -18,7 +18,7 @@
             <span class="pub-badge-year" style="font-size: 11px; padding: 4px 14px; margin-bottom: 8px;">
                 FORMULIR BERHASIL TERKIRIM
             </span>
-            <h1 style="margin: 10px 0 0; font-size: clamp(22px, 3.5vw, 28px); font-weight: 800; letter-spacing: -0.03em; color: #ffffff;">
+            <h1 style="margin: 10px 0 0; font-size: clamp(22px, 3.5vw, 28px); font-weight: 800; letter-spacing: -0.03em; color: var(--pub-text, #0f172a);">
                 Bukti Pengajuan Pendataan Guru
             </h1>
             <p style="margin: 6px 0 0; color: var(--pub-muted); font-size: 13.5px;">
