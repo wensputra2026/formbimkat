@@ -4,8 +4,8 @@
 @import '@fontsource/poppins/600.css';
 @import '@fontsource/poppins/700.css';
 @import '@fontsource/poppins/800.css';
-@import './public.css';
 @import './premium-dashboard.css';
+@import './public.css';
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -17,259 +17,20 @@
     --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
 
-@layer components {
-    .field {
-        display: block;
-        width: 100%;
-        min-width: 0;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 0.75rem;
-        background-color: #0d121c;
-        color: #ffffff;
-        color-scheme: dark;
-        padding: 0.75rem 1rem;
-        line-height: 1.5;
-        transition: border-color 150ms ease, box-shadow 150ms ease;
-    }
-
-    .field:focus {
-        border-color: #f59a45;
-        outline: 2px solid transparent;
-        box-shadow: 0 0 0 3px rgba(245, 154, 69, 0.25);
-    }
-
-    .field::placeholder {
-        color: #64748b;
-    }
-
-    .label {
-        display: block;
-        margin-bottom: 0.375rem;
-        color: #f1f5f9;
-        font-weight: 600;
-    }
-
-    .label em {
-        color: #f87171;
-        font-style: normal;
-    }
-}
-
-.public-body #gaji_pokok {
-    padding-left: 48px !important;
-}
-
-/* Consistent light appearance for public pages and the admin portal. */
-:root {
-    color-scheme: light;
-    --pd-bg: #f1f5f9;
-    --pd-sidebar: #ffffff;
-    --pd-panel: #ffffff;
-    --pd-panel-soft: #f8fafc;
-    --pd-border: #dbe3ed;
-    --pd-text: #10213b;
-    --pd-muted: #64748b;
-    --pd-dim: #64748b;
-    --pd-accent: #07823f;
-    --pd-accent-2: #05632e;
-    --pd-success: #07823f;
-    --pub-bg: #f8fafc;
-    --pub-bg-soft: #f1f5f9;
-    --pub-card: #ffffff;
-    --pub-text: #10213b;
-    --pub-muted: #64748b;
-    --pub-line: #dbe3ed;
-    --pub-accent: #07823f;
-    --pub-accent-dark: #05632e;
-    --pub-navy: #064e2b;
-    --pub-shadow: 0 18px 55px rgb(15 23 42 / 9%);
-}
-
-html,
-body,
-body.premium-body {
-    color-scheme: light !important;
-    background: #f1f5f9 !important;
-    color: #10213b !important;
-}
-
 html, body, body * {
-    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif !important;
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
 
 code, kbd, samp, pre, .font-mono, [style*="monospace"], input[style*="monospace"], span[style*="monospace"], div[style*="monospace"], strong[style*="monospace"] {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
-h1, h2, h3, h4, h5, h6,
-.pd-page-heading h1,
-.pd-panel-heading h2,
-.pd-brand-copy strong,
-.pd-user-copy strong,
-.pd-breadcrumb strong {
-    color: #10213b !important;
+/* Base Form Helpers */
+.public-body #gaji_pokok {
+    padding-left: 48px !important;
 }
 
-.pd-sidebar,
-.pd-topbar,
-.pd-main,
-.pd-content,
-.pd-footer {
-    background-color: #f1f5f9 !important;
-}
-
-.pd-sidebar,
-.pd-topbar {
-    background-color: #ffffff !important;
-    border-color: #dbe3ed !important;
-    box-shadow: 0 3px 12px rgb(15 23 42 / 5%);
-}
-
-.pd-nav-link,
-.pd-subnav-link,
-.pd-profile-mini,
-.pd-icon-button {
-    color: #334155 !important;
-}
-
-.pd-nav-link:hover,
-.pd-subnav-link:hover {
-    color: #05632e !important;
-    background-color: #f0fdf4 !important;
-}
-
-.pd-nav-link.active,
-.pd-subnav-link.active {
-    color: #05632e !important;
-    background-color: #dcfce7 !important;
-    border-color: #86c99e !important;
-}
-
-.pd-nav-link.active::before,
-.pd-subnav-link.active .pd-subnav-dot {
-    background-color: #07823f !important;
-}
-
-.pd-stat-card,
-.pd-panel {
-    background-color: #ffffff !important;
-    border-color: #dbe3ed !important;
-    color: #10213b !important;
-    box-shadow: 0 8px 24px rgb(15 23 42 / 6%) !important;
-}
-
-.pd-stat-top,
-.pd-stat-bottom,
-.pd-page-heading p,
-.pd-panel-heading p,
-.pd-hint,
-.pd-breadcrumb,
-.pd-brand-copy small,
-.pd-user-copy small {
-    color: #64748b !important;
-}
-
-.pd-brand-copy strong {
-    overflow: visible;
-    line-height: 1.25;
-    text-overflow: clip;
-    white-space: normal;
-}
-
-.pd-button-primary,
-.pd-button-success,
-.pub-button-primary,
-.pub-back-to-top {
-    color: #ffffff !important;
-    background-color: #07823f !important;
-    border-color: #07823f !important;
-}
-
-.pd-button-primary:hover,
-.pd-button-success:hover,
-.pub-button-primary:hover,
-.pub-back-to-top:hover {
-    background-color: #05632e !important;
-}
-
-.pd-button-secondary,
-.pd-select,
-.pd-help-card {
-    color: #334155 !important;
-    background-color: #ffffff !important;
-    border-color: #dbe3ed !important;
-}
-
-.pd-input,
-.pd-select-field,
-.pd-textarea,
-.field,
-select.pd-input,
-input.pd-input,
-textarea.pd-input {
-    color: #10213b !important;
-    background-color: #ffffff !important;
-    border-color: #cbd5e1 !important;
-    color-scheme: light !important;
-    box-shadow: none !important;
-}
-
-.pd-input::placeholder,
-.pd-textarea::placeholder {
-    color: #94a3b8 !important;
-}
-
-.pd-input:focus,
-.pd-select-field:focus,
-.pd-textarea:focus,
-.field:focus {
-    border-color: #07823f !important;
-    box-shadow: 0 0 0 3px rgb(7 130 63 / 15%) !important;
-}
-
-.pd-select-field option,
-select.pd-input option {
-    color: #10213b !important;
-    background-color: #ffffff !important;
-}
-
-.pd-brand-mark,
-.pd-avatar {
-    color: #ffffff !important;
-    background-color: #07823f !important;
-}
-
-.public-body,
-.public-body main,
-.public-body .pub-section,
-.public-body .pub-hero,
-.public-body .pub-page-hero {
-    background-color: #f8fafc !important;
-    color: #10213b !important;
-}
-
-.public-body .pub-header,
-.public-body .pub-card,
-.public-body .pd-panel {
-    background-color: #ffffff !important;
-    color: #10213b !important;
-}
-
-.public-body .pub-brand-mark,
-.public-body .pub-core-mark {
-    color: #ffffff !important;
-    background-color: #07823f !important;
-}
-
-.public-body .pub-footer {
-    background-color: #064e2b !important;
-    color: #ffffff !important;
-}
-
-.public-body .pub-footer * {
-    color: inherit;
-}
-
+/* Collapsed sidebar helpers */
 @media (min-width: 761px) {
     .sidebar-collapsed .pd-sidebar {
         width: var(--pd-sidebar-mini);
@@ -309,10 +70,5 @@ select.pd-input option {
 
     .sidebar-collapsed .pd-user-card > div:first-child {
         justify-content: center;
-    }
-
-    .sidebar-collapsed .pd-collapse-button {
-        color: #334155 !important;
-        background-color: #f1f5f9 !important;
     }
 }

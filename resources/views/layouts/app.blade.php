@@ -4,9 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0b0e14">
     <link rel="icon" type="image/png" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <link rel="apple-touch-icon" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <title>@yield('title', 'Dashboard') — {{ \App\Models\Setting::get('app_name', 'Pendataan Guru.') }}</title>
+    <meta property="og:title" content="Pendataan guru penerima TPG Kemenag Kementerian Agama Kab.TTS">
+    <meta property="og:description" content="Portal Resmi Formulir Pendataan Guru Penerima TPG Kantor Kementerian Agama Kabupaten Timor Tengah Selatan.">
+    <meta property="og:image" content="{{ asset('logo-bimas-katolik.png') }}">
     
     <!-- Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

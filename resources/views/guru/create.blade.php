@@ -1,22 +1,30 @@
 @extends('layouts.public')
 
-@section('title', 'Formulir Pendataan Guru Mandiri')
+@section('title', 'Formulir Pendataan Guru Sertifikasi')
 
 @section('content')
-<section class="pub-section" style="padding-top: 35px; padding-bottom: 60px;">
-<div class="pub-container" style="display: flex; flex-direction: column; gap: 28px;" x-data="duplicateChecker()">
+<section class="pub-section" style="padding-top: 25px; padding-bottom: 50px;">
+<div class="pub-container" style="display: flex; flex-direction: column; gap: 22px;" x-data="duplicateChecker()">
 
     <!-- Header Banner -->
-    <div class="pd-panel" style="padding: clamp(24px, 4vw, 36px);">
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div class="pd-panel" style="padding: clamp(20px, 3.5vw, 32px);">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 10px;">
                 <span class="pub-badge-year">
                     <i></i> TAHUN PENDATAAN {{ \App\Models\Setting::get('tahun_pendataan', date('Y')) }}
                 </span>
             </div>
-            <h1 style="margin: 0; font-size: clamp(22px, 3.5vw, 32px); font-weight: 800; letter-spacing: -0.03em;">
-                Formulir Pendataan Guru Mandiri<span style="color: var(--pub-accent);">.</span>
+            <h1 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; letter-spacing: -0.03em; color: #ffffff;">
+                Formulir Pendataan Guru Sertifikasi
             </h1>
+            <p style="margin: 4px 0 0; color: var(--pub-muted); font-size: 13px; line-height: 1.6;">
+                Selamat datang di Sistem Pendataan Guru Kementerian Agama. Silakan mengisi formulir data diri dengan lengkap, cermat, dan benar sesuai dokumen resmi Anda. Simpan Nomor Registrasi yang diterbitkan sebagai bukti pengajuan.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; font-size: 12px; color: var(--pub-muted);">
+                <span style="display: inline-flex; align-items: center; gap: 6px;"><strong style="color: var(--pub-success);">✓</strong> Tanpa Perlu Akun Guru</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px;"><strong style="color: var(--pub-success);">✓</strong> Nomor Registrasi Unik Otomatis</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px;"><strong style="color: var(--pub-success);">✓</strong> Validasi Keunikan NIP & NIK</span>
+            </div>
         </div>
     </div>
 
@@ -32,7 +40,7 @@
     @endif
 
     <!-- Form Utama -->
-    <form action="{{ route('guru.store') }}" method="POST" class="pd-panel" data-swal-title="Kirim formulir pendataan?" data-swal-confirm="Pastikan seluruh data yang Anda isi sudah benar dan lengkap." data-swal-icon="question" data-swal-confirm-button="Ya, kirim" style="padding: clamp(20px, 4vw, 36px); display: flex; flex-direction: column; gap: 32px;">
+    <form action="{{ route('guru.store') }}" method="POST" class="pd-panel" data-swal-title="Kirim formulir pendataan?" data-swal-confirm="Pastikan seluruh data yang Anda isi sudah benar dan lengkap." data-swal-icon="question" data-swal-confirm-button="Ya, kirim" style="padding: clamp(16px, 3.5vw, 32px); display: flex; flex-direction: column; gap: 28px; width: 100%; box-sizing: border-box;">
         @csrf
 
         <!-- 1. IDENTITAS GURU -->
@@ -45,7 +53,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+            <div class="pd-form-grid-2">
                 <!-- Nama Lengkap -->
                 <div style="grid-column: 1 / -1;">
                     <label for="nama" class="pd-label">Nama Lengkap Guru <em>*</em></label>
@@ -91,7 +99,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+            <div class="pd-form-grid-2">
                 <!-- Pangkat / Golongan -->
                 <div>
                     <label for="pangkat_golongan_id" class="pd-label">Pangkat / Golongan <em>*</em></label>
@@ -131,7 +139,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+            <div class="pd-form-grid-3">
                 <!-- Gaji Pokok -->
                 <div>
                     <label for="gaji_pokok" class="pd-label">Gaji Pokok Saat Ini (Rp) <em>*</em></label>
@@ -139,13 +147,13 @@
                         <span style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-weight: 800; color: var(--pub-accent-dark); font-size: 12px;">Rp</span>
                         <input type="number" min="0" step="0.01" name="gaji_pokok" id="gaji_pokok" value="{{ old('gaji_pokok') }}" required placeholder="Contoh: 3500000" class="pd-input" style="padding-left: 40px; font-family: monospace;">
                     </div>
-                    <span class="pd-hint">Masukkan angka murni tanpa tanda titik atau koma ribuan.</span>
+                    <span class="pd-hint">Masukkan angka murni tanpa titik atau koma.</span>
                 </div>
 
                 <!-- KGB Berikutnya -->
                 <div>
                     <label class="pd-label">Berkala Berikutnya (KGB) <em>*</em></label>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 8px;">
                         <select name="kgb_bulan" id="kgb_bulan" required class="pd-select-field">
                             <option value="">Bulan</option>
                             @foreach($bulanChoices as $num => $namaBulan)
@@ -154,13 +162,13 @@
                         </select>
                         <input type="number" name="kgb_tahun" id="kgb_tahun" min="1900" max="2100" placeholder="Tahun" value="{{ old('kgb_tahun', date('Y')) }}" required class="pd-input">
                     </div>
-                    <span class="pd-hint">Pilih bulan dan masukkan 4 digit tahun berkala.</span>
+                    <span class="pd-hint">Bulan & tahun kenaikan berkala.</span>
                 </div>
 
                 <!-- Batas Usia Pensiun -->
                 <div>
                     <label class="pd-label">Perkiraan Pensiun <em>*</em></label>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 8px;">
                         <select name="pensiun_bulan" id="pensiun_bulan" required class="pd-select-field">
                             <option value="">Bulan</option>
                             @foreach($bulanChoices as $num => $namaBulan)
@@ -169,7 +177,7 @@
                         </select>
                         <input type="number" name="pensiun_tahun" id="pensiun_tahun" min="1900" max="2100" placeholder="Tahun" value="{{ old('pensiun_tahun', date('Y') + 15) }}" required class="pd-input">
                     </div>
-                    <span class="pd-hint">Bulan dan 4 digit tahun pensiun.</span>
+                    <span class="pd-hint">Bulan & perkiraan tahun pensiun.</span>
                 </div>
             </div>
         </div>
@@ -216,12 +224,12 @@
                      style="display: none;">
                     <template x-for="item in results" :key="item.id_sekolah">
                         <div @click="choose(item)" class="pub-search-item">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <strong x-text="item.nama_sekolah"></strong>
-                                <span class="pub-badge-year" style="font-size: 10px; padding: 2px 8px;" x-text="item.jenjang || 'Sekolah'"></span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                                <strong x-text="item.nama_sekolah" style="color: #ffffff;"></strong>
+                                <span class="pub-badge-year" style="font-size: 10px; padding: 2px 8px; flex-shrink: 0;" x-text="item.jenjang || 'Sekolah'"></span>
                             </div>
-                            <div style="font-size: 11px; margin-top: 4px; display: flex; gap: 12px;">
-                                <span x-show="item.npsn">NPSN: <b x-text="item.npsn"></b></span>
+                            <div style="font-size: 11px; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; color: var(--pub-muted);">
+                                <span x-show="item.npsn">NPSN: <b x-text="item.npsn" style="color: #ffbd78;"></b></span>
                                 <span x-show="item.kabupaten" x-text="item.kabupaten"></span>
                                 <span x-show="item.provinsi" x-text="'(' + item.provinsi + ')'"></span>
                             </div>
@@ -235,7 +243,7 @@
                         <span style="font-weight: 700;">✓ Sekolah Terpilih:</span>
                         <strong style="margin-left: 4px;" x-text="query"></strong>
                     </div>
-                    <button type="button" @click="clear()" style="background: transparent; border: 0; color: #ef4444; font-size: 12px; font-weight: 700; cursor: pointer;">Ganti</button>
+                    <button type="button" @click="clear()" style="background: transparent; border: 0; color: #f87171; font-size: 12px; font-weight: 700; cursor: pointer;">Ganti</button>
                 </div>
 
                 <span class="pd-hint">Sekolah tersinkronisasi langsung dari database BIMKAT.</span>
@@ -250,7 +258,7 @@
 
             <button type="submit"
                     class="pub-button pub-button-primary pub-button-large"
-                    style="width: 100%; font-size: 14px; font-weight: 800; letter-spacing: 0.05em;">
+                    style="width: 100%; font-size: 14px; font-weight: 800; letter-spacing: 0.04em;">
                 <span>KIRIM FORMULIR PENDATAAN SEKARANG</span>
                 <span>→</span>
             </button>

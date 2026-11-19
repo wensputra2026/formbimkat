@@ -4,12 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="dark">
     <link rel="icon" type="image/png" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <link rel="apple-touch-icon" href="{{ asset('logo-bimas-katolik.png') }}?v=1">
     <title>@yield('title', 'Pendataan Guru') — {{ \App\Models\Setting::get('app_name', 'Pendataan Guru.') }}</title>
-    <meta name="description" content="@yield('meta_description', 'Portal Resmi Pendataan Guru Agama Katolik Kantor Kementerian Agama Kabupaten Timor Tengah Selatan.')">
-    <meta name="theme-color" content="#f8fafc">
+    <meta name="description" content="@yield('meta_description', 'Pendataan guru penerima TPG Kemenag Kementerian Agama Kab.TTS — Formulir Pendataan Guru Sertifikasi resmi.')">
+    <meta name="theme-color" content="#0b0e14">
+
+    <!-- Social Media Sharing Meta Tags (WhatsApp, Facebook, Telegram, Twitter) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Pendataan guru penerima TPG Kemenag Kementerian Agama Kab.TTS">
+    <meta property="og:description" content="Portal Resmi Formulir Pendataan Guru Penerima TPG Kantor Kementerian Agama Kabupaten Timor Tengah Selatan.">
+    <meta property="og:image" content="{{ asset('logo-bimas-katolik.png') }}">
+    <meta property="og:image:secure_url" content="{{ asset('logo-bimas-katolik.png') }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:site_name" content="Kementerian Agama Kab.TTS">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pendataan guru penerima TPG Kemenag Kementerian Agama Kab.TTS">
+    <meta name="twitter:description" content="Portal Resmi Formulir Pendataan Guru Penerima TPG Kantor Kementerian Agama Kabupaten Timor Tengah Selatan.">
+    <meta name="twitter:image" content="{{ asset('logo-bimas-katolik.png') }}">
 
     <!-- Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
