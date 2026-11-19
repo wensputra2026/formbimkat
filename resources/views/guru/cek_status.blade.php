@@ -9,40 +9,32 @@
 
     <!-- Heading -->
     <div style="text-align: center;">
-        <span class="pub-badge-year">
-            <i></i> VERIFIKASI IDENTITAS & STATUS
+        <span class="pub-badge-year" style="background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa;">
+            <i></i> PENGECEKAN STATUS & KOREKSI MANDIRI
         </span>
-        <h1 style="margin: 10px 0 0; font-size: clamp(24px, 3.5vw, 30px); font-weight: 800; letter-spacing: -0.03em; color: var(--pub-text, #0f172a);">
-            Cek Status Pendataan Guru<span style="color: var(--pub-accent);">.</span>
+        <h1 style="margin: 10px 0 0; font-size: clamp(24px, 3.5vw, 30px); font-weight: 800; letter-spacing: -0.03em; color: #0f172a;">
+            Cek Status & Edit Data Guru<span style="color: #ea580c;">.</span>
         </h1>
-        <p style="margin: 8px 0 0; color: var(--pub-muted); font-size: 13.5px;">
-            Masukkan Nomor Registrasi dan 4 digit terakhir NIP atau NIK Anda.
+        <p style="margin: 8px 0 0; color: #475569; font-size: 14px;">
+            Masukkan <strong>NIP (18 Digit)</strong> atau <strong>NIK (16 Digit)</strong> Anda untuk memeriksa status pendaftaran dan memperbaiki data.
         </p>
     </div>
 
     <!-- Panel Form -->
-    <div class="pd-panel" style="padding: clamp(24px, 4vw, 36px);">
+    <div class="pd-panel" style="padding: clamp(24px, 4vw, 36px); background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 20px rgba(15,23,42,0.06);">
         <form action="{{ route('guru.cek_status') }}" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
             @csrf
 
-            <!-- Nomor Registrasi -->
+            <!-- NIP / NIK / Nomor Registrasi -->
             <div>
-                <label for="nomor_registrasi" class="pd-label">Nomor Registrasi <em>*</em></label>
-                <input type="text" name="nomor_registrasi" id="nomor_registrasi" value="{{ old('nomor_registrasi') }}" required placeholder="Contoh: PGK-2026-XXXXXXXX" class="pd-input" style="font-family: monospace; letter-spacing: 0.05em; text-transform: uppercase;">
-                <span class="pd-hint">Nomor registrasi yang diperoleh saat formulir dikirim.</span>
-                @error('nomor_registrasi') <p style="color: #ef4444; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
+                <label for="identitas" class="pd-label" style="color: #0f172a; font-weight: 700;">NIP / NIK Guru <em>*</em></label>
+                <input type="text" name="identitas" id="identitas" value="{{ old('identitas') }}" required placeholder="Contoh: 198802142020121002 atau 5302061402880001" class="pd-input" style="font-family: monospace; font-size: 14px; background: #ffffff; color: #0f172a; border-color: #cbd5e1;">
+                <span class="pd-hint" style="color: #64748b;">Langsung masukkan NIP (18 digit) atau NIK (16 digit) Anda. Bisa juga Nomor Registrasi jika ada.</span>
+                @error('identitas') <p style="color: #ef4444; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
             </div>
 
-            <!-- 4 Digit Terakhir NIP / NIK -->
-            <div>
-                <label for="digit_verifikasi" class="pd-label">4 Digit Terakhir NIP atau NIK <em>*</em></label>
-                <input type="text" inputmode="numeric" maxlength="4" name="digit_verifikasi" id="digit_verifikasi" value="{{ old('digit_verifikasi') }}" required placeholder="Contoh: 1234" class="pd-input" style="font-family: monospace; letter-spacing: 0.1em;">
-                <span class="pd-hint">Pengaman privasi agar data Anda tidak dilihat oleh orang lain.</span>
-                @error('digit_verifikasi') <p style="color: #ef4444; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
-            </div>
-
-            <button type="submit" class="pub-button pub-button-primary pub-button-large" style="width: 100%; font-weight: 800; font-size: 13.5px; margin-top: 6px;">
-                <span>PERIKSA STATUS PENGAJUAN</span>
+            <button type="submit" class="pub-button pub-button-primary pub-button-large" style="width: 100%; font-weight: 800; font-size: 14px; margin-top: 6px;">
+                <span>PERIKSA STATUS & BUKA DATA GURU</span>
                 <span>→</span>
             </button>
         </form>
@@ -51,7 +43,7 @@
     <!-- Alert Error Jika Tidak Cocok -->
     @if(isset($error) && $error)
         <div class="pd-alert pd-alert-error" style="border-radius: 12px; font-size: 13px;">
-            <strong style="display: block; margin-bottom: 2px;">Pemeriksaan Gagal</strong>
+            <strong style="display: block; margin-bottom: 2px;">Pemeriksaan Tidak Ditemukan</strong>
             <span>{{ $error }}</span>
         </div>
     @endif
@@ -95,8 +87,16 @@
                     <strong style="font-family: monospace; color: #ea580c; font-size: 13.5px; font-weight: 800;">{{ $guruResult['nomor_registrasi'] }}</strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
-                    <span style="color: #475569;">Nama Guru:</span>
-                    <strong style="color: #0f172a; font-size: 13.5px; font-weight: 700;">{{ $guruResult['nama'] }}</strong>
+                    <span style="color: #475569;">Nama Lengkap:</span>
+                    <strong style="color: #0f172a; font-size: 14px; font-weight: 800;">{{ $guruResult['nama'] }}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
+                    <span style="color: #475569;">NIP / NIK:</span>
+                    <strong style="font-family: monospace; color: #0f172a; font-size: 13px;">{{ $guruResult['nip'] !== '-' ? 'NIP: ' . $guruResult['nip'] : 'NIK: ' . $guruResult['nik'] }}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
+                    <span style="color: #475569;">Pangkat / Golongan:</span>
+                    <strong style="color: #0f172a; font-size: 13px;">{{ $guruResult['pangkat'] }}</strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; padding: 10px 0;">
                     <span style="color: #475569;">Sekolah Tempat Tugas:</span>

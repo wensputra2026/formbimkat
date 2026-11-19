@@ -103,7 +103,7 @@ class PublicGuruController extends Controller
     }
 
     /**
-     * Cek Status Pendataan Mandiri oleh Guru
+     * Cek Status & Pencarian Data Mandiri oleh Guru (Bisa via NIP, NIK, atau No. Registrasi)
      */
     public function cekStatus(Request $request)
     {
@@ -112,44 +112,42 @@ class PublicGuruController extends Controller
 
         if ($request->isMethod('post')) {
             $request->validate([
-                'nomor_registrasi' => ['required', 'string'],
-                'digit_verifikasi' => ['required', 'string', 'size:4'],
+                'identitas' => ['required', 'string'],
             ], [
-                'nomor_registrasi.required' => 'Nomor registrasi wajib diisi.',
-                'digit_verifikasi.required' => '4 digit terakhir NIP/NIK wajib diisi.',
-                'digit_verifikasi.size' => 'Digit verifikasi harus tepat 4 angka.',
+                'identitas.required' => 'NIP, NIK, atau Nomor Registrasi wajib diisi.',
             ]);
 
-            $nomorReg = trim($request->input('nomor_registrasi'));
-            $digit = trim($request->input('digit_verifikasi'));
+            $input = trim((string)$request->input('identitas'));
+            $cleanNumeric = preg_replace('/[^0-9]/', '', $input);
 
-            $guru = Guru::with(['sekolah'])
-                ->where('nomor_registrasi', $nomorReg)
+            $guru = Guru::with(['sekolah', 'pangkatGolongan'])
+                ->where('nomor_registrasi', $input)
+                ->when(!empty($cleanNumeric), function ($q) use ($cleanNumeric) {
+                    $q->orWhere('nip', $cleanNumeric)
+                      ->orWhere('nik', $cleanNumeric);
+                })
+                ->orWhere('nip', $input)
+                ->orWhere('nik', $input)
                 ->first();
 
             if (!$guru) {
-                $error = 'Nomor registrasi tidak ditemukan dalam sistem.';
+                $error = "Data guru dengan identitas \"{$input}\" tidak ditemukan dalam sistem. Pastikan NIP atau NIK Anda sudah benar, atau silakan lakukan pengisian formulir pendataan terlebih dahulu.";
             } else {
-                // Verifikasi 4 digit terakhir NIP atau NIK
-                $last4Nip = $guru->nip ? substr($guru->nip, -4) : '';
-                $last4Nik = $guru->nik ? substr($guru->nik, -4) : '';
+                // Berhasil verifikasi - simpan otorisasi di session
+                session(['guru_edit_auth_' . $guru->nomor_registrasi => true]);
 
-                if ($digit !== $last4Nip && $digit !== $last4Nik) {
-                    $error = 'Kombinasi Nomor Registrasi dan 4 digit terakhir NIP/NIK tidak cocok.';
-                } else {
-                    // Berhasil verifikasi - simpan otorisasi di session
-                    session(['guru_edit_auth_' . $guru->nomor_registrasi => true]);
-
-                    $guruResult = [
-                        'nomor_registrasi' => $guru->nomor_registrasi,
-                        'nama' => $guru->nama,
-                        'nama_sekolah' => $guru->sekolah ? $guru->sekolah->nama_sekolah : '-',
-                        'status_verifikasi' => $guru->status_verifikasi,
-                        'tanggal_pengajuan' => $guru->created_at->copy()->timezone('Asia/Makassar')->format('d/m/Y H:i:s') . ' WITA',
-                        'alasan_penolakan' => $guru->status_verifikasi === 'Ditolak' ? $guru->alasan_penolakan : null,
-                        'edit_url' => route('guru.edit_mandiri', ['nomor_registrasi' => $guru->nomor_registrasi]),
-                    ];
-                }
+                $guruResult = [
+                    'nomor_registrasi' => $guru->nomor_registrasi,
+                    'nama' => $guru->nama,
+                    'nip' => $guru->nip ?: '-',
+                    'nik' => $guru->nik ?: '-',
+                    'nama_sekolah' => $guru->sekolah ? $guru->sekolah->nama_sekolah : '-',
+                    'pangkat' => $guru->pangkatGolongan ? $guru->pangkatGolongan->label : '-',
+                    'status_verifikasi' => $guru->status_verifikasi,
+                    'tanggal_pengajuan' => $guru->created_at->copy()->timezone('Asia/Makassar')->format('d/m/Y H:i:s') . ' WITA',
+                    'alasan_penolakan' => $guru->status_verifikasi === 'Ditolak' ? $guru->alasan_penolakan : null,
+                    'edit_url' => route('guru.edit_mandiri', ['nomor_registrasi' => $guru->nomor_registrasi]),
+                ];
             }
         }
 

@@ -18,7 +18,7 @@
 
         <nav class="pub-nav" :class="{ 'is-open': menuOpen }" aria-label="Navigasi utama">
             <a href="{{ route('guru.create') }}" class="{{ request()->routeIs('guru.create') ? 'is-active' : '' }}">Formulir Pendataan</a>
-            <a href="{{ route('guru.cek_status') }}" class="{{ request()->routeIs('guru.cek_status') ? 'is-active' : '' }}">Cek Status</a>
+            <a href="{{ route('guru.cek_status') }}" class="{{ request()->routeIs('guru.cek_status*') || request()->routeIs('guru.edit_mandiri*') ? 'is-active' : '' }}">Cek Status & Edit Data</a>
             <div class="pub-mobile-actions">
                 @if($isAdminLoggedIn)
                     <a href="{{ route('admin.dashboard') }}" class="pub-button pub-button-primary">Panel Admin</a>
