@@ -90,27 +90,27 @@
                 <tbody>
                     @forelse($sekolahs as $index => $s)
                         <tr>
-                            <td style="text-align: center; color: var(--pd-dim); font-weight: 700;">
+                            <td style="text-align: center; color: #64748b; font-weight: 700;">
                                 {{ $sekolahs->firstItem() + $index }}
                             </td>
                             <td>
-                                <strong style="color: #f4f5f7;">{{ $s->nama_sekolah }}</strong>
-                                <small style="color: var(--pd-dim);">ID: {{ $s->id_sekolah }}</small>
+                                <strong style="color: #0f172a; font-size: 13.5px; font-weight: 700;">{{ $s->nama_sekolah }}</strong>
+                                <small style="color: #64748b; font-size: 10px;">ID: {{ $s->id_sekolah }}</small>
                             </td>
                             <td>
-                                <strong style="font-family: monospace; color: #ffbd78;">{{ $s->npsn ?: '-' }}</strong>
+                                <strong style="font-family: monospace; color: #ea580c; font-size: 13px; font-weight: 700;">{{ $s->npsn ?: '-' }}</strong>
                             </td>
                             <td>
                                 <span class="pd-badge {{ $s->status_sekolah === 'Negeri' ? 'is-success' : 'is-warning' }}">
                                     <i></i> {{ $s->jenjang }} — {{ $s->status_sekolah }}
                                 </span>
                             </td>
-                            <td style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            <td style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #334155;">
                                 {{ $s->alamat_sekolah ?: '-' }}
                             </td>
                             <td>
-                                <strong>{{ $s->kabupaten ?: 'Timor Tengah Selatan' }}</strong>
-                                <small>{{ $s->provinsi ?: 'Nusa Tenggara Timur' }}</small>
+                                <strong style="color: #0f172a; font-size: 13px;">{{ $s->kabupaten ?: 'Timor Tengah Selatan' }}</strong>
+                                <small style="color: #64748b; font-size: 11px;">{{ $s->provinsi ?: 'Nusa Tenggara Timur' }}</small>
                             </td>
                         </tr>
                     @empty

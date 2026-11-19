@@ -99,12 +99,12 @@
                 <tbody>
                     @forelse($histories as $log)
                         <tr>
-                            <td style="color: #cbd5e1; font-family: monospace; font-size: 11px;">
+                            <td style="color: #475569; font-family: monospace; font-size: 11.5px; font-weight: 600;">
                                 {{ $log->login_at ? $log->login_at->timezone('Asia/Makassar')->format('d/m/Y H:i:s') : '-' }}
                             </td>
                             <td>
-                                <strong style="font-size: 12px; color: #f4f5f7;">{{ $log->username }}</strong>
-                                <small style="color: var(--pd-muted); font-size: 9px;">
+                                <strong style="font-size: 13px; color: #0f172a; font-weight: 700; display: block;">{{ $log->username }}</strong>
+                                <small style="color: #64748b; font-size: 10px; font-weight: 500;">
                                     {{ $log->user ? $log->user->name : 'Akun Tidak Ditemukan' }}
                                 </small>
                             </td>
@@ -115,19 +115,19 @@
                                     <span class="pd-badge is-danger"><i></i> Gagal</span>
                                 @endif
                             </td>
-                            <td style="font-family: monospace; color: var(--pd-accent); font-size: 11px;">
+                            <td style="font-family: monospace; color: #ea580c; font-size: 11.5px; font-weight: 600;">
                                 {{ $log->ip_address }}
                             </td>
-                            <td style="font-size: 11px; color: var(--pd-muted);">
+                            <td style="font-size: 11.5px; color: #334155; font-weight: 500;">
                                 {{ $log->browser ?: 'Browser Tidak Dikenal' }} · {{ $log->operating_system ?: 'OS Tidak Dikenal' }}
                             </td>
-                            <td style="font-size: 10px; color: var(--pd-dim);">
+                            <td style="font-size: 11px; color: #64748b;">
                                 {{ $log->keterangan ?: ($log->status === 'Berhasil' ? 'Autentikasi lolos' : 'Sandi tidak sesuai') }}
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 48px 16px; color: var(--pd-dim);">
+                            <td colspan="6" style="text-align: center; padding: 48px 16px; color: #64748b; font-style: italic;">
                                 Belum ada riwayat login yang tercatat.
                             </td>
                         </tr>

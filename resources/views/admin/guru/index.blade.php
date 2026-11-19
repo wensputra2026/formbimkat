@@ -107,34 +107,34 @@
                 <tbody>
                     @forelse($gurus as $index => $guru)
                         <tr>
-                            <td style="text-align: center; color: var(--pd-dim); font-weight: 700;">
+                            <td style="text-align: center; color: #64748b; font-weight: 700;">
                                 {{ $gurus->firstItem() + $index }}
                             </td>
                             <td>
-                                <strong style="font-family: monospace; color: #ffbd78;">{{ $guru->nomor_registrasi }}</strong>
-                                <small>{{ $guru->created_at->format('d/m/Y H:i') }}</small>
+                                <strong style="font-family: monospace; color: #ea580c; font-size: 13px; font-weight: 800;">{{ $guru->nomor_registrasi }}</strong>
+                                <small style="color: #64748b; font-weight: 500;">{{ $guru->created_at->format('d/m/Y H:i') }}</small>
                             </td>
                             <td>
-                                <a href="{{ route('admin.guru.show', $guru->id) }}" style="color: #f4f5f7; font-weight: 700;">
+                                <a href="{{ route('admin.guru.show', $guru->id) }}" style="color: #0f172a; font-weight: 800; font-size: 13.5px; text-decoration: none; display: block;" onmouseover="this.style.color='#ea580c'" onmouseout="this.style.color='#0f172a'">
                                     {{ $guru->nama }}
                                 </a>
-                                <small style="color: #6bd4ae;">{{ $guru->formatted_gaji }}</small>
+                                <small style="color: #047857; font-weight: 700; font-size: 11px;">{{ $guru->formatted_gaji }}</small>
                             </td>
                             <td>
                                 @if($guru->nip)
-                                    <div style="font-family: monospace; color: #cbd5e1;">NIP: {{ $guru->nip }}</div>
+                                    <div style="font-family: monospace; color: #0f172a; font-weight: 600; font-size: 11.5px;">NIP: {{ $guru->nip }}</div>
                                 @endif
                                 @if($guru->nik)
-                                    <div style="font-family: monospace; color: #94a3b8; font-size: 9px;">NIK: {{ $guru->nik }}</div>
+                                    <div style="font-family: monospace; color: #475569; font-weight: 500; font-size: 10.5px;">NIK: {{ $guru->nik }}</div>
                                 @endif
                             </td>
                             <td>
-                                <strong>{{ $guru->sekolah ? $guru->sekolah->nama_sekolah : '-' }}</strong>
-                                <small>{{ $guru->sekolah ? $guru->sekolah->kabupaten : '' }}</small>
+                                <strong style="color: #0f172a; font-size: 13px;">{{ $guru->sekolah ? $guru->sekolah->nama_sekolah : '-' }}</strong>
+                                <small style="color: #64748b; font-size: 11px;">{{ $guru->sekolah ? $guru->sekolah->kabupaten : '' }}</small>
                             </td>
                             <td>
-                                <strong>{{ $guru->pangkatGolongan ? $guru->pangkatGolongan->golongan : '-' }}</strong>
-                                <small>{{ $guru->pangkatGolongan ? $guru->pangkatGolongan->pangkat : '-' }}</small>
+                                <strong style="color: #0f172a; font-size: 13px;">{{ $guru->pangkatGolongan ? $guru->pangkatGolongan->golongan : '-' }}</strong>
+                                <small style="color: #64748b; font-size: 11px;">{{ $guru->pangkatGolongan ? $guru->pangkatGolongan->pangkat : '-' }}</small>
                             </td>
                             <td>
                                 @if($guru->penerima_tpg)

@@ -64,7 +64,7 @@
                 <tbody>
                     @forelse($logs as $log)
                         <tr>
-                            <td style="color: #cbd5e1; font-family: monospace; font-size: 11px;">
+                            <td style="color: #475569; font-family: monospace; font-size: 11.5px; font-weight: 600;">
                                 {{ $log->created_at ? $log->created_at->timezone('Asia/Makassar')->format('d/m/Y H:i:s') : '-' }}
                             </td>
                             <td>
@@ -79,16 +79,16 @@
                                 <span class="pd-badge {{ $badgeType }}">{{ strtoupper($log->action) }}</span>
                             </td>
                             <td>
-                                <strong style="font-size: 12px; color: #f4f5f7;">{{ $log->description }}</strong>
+                                <strong style="font-size: 13px; color: #0f172a; font-weight: 700; display: block;">{{ $log->description }}</strong>
                                 @if($log->model_type)
-                                    <small style="color: var(--pd-dim); font-size: 9px;">Target: {{ class_basename($log->model_type) }} #{{ $log->model_id }}</small>
+                                    <small style="color: #64748b; font-size: 10px;">Target: {{ class_basename($log->model_type) }} #{{ $log->model_id }}</small>
                                 @endif
                             </td>
                             <td>
-                                <strong style="font-size: 11px; color: #cbd5e1;">{{ $log->user ? $log->user->name : 'Sistem / Publik' }}</strong>
-                                <small style="color: var(--pd-dim); font-size: 9px;">{{ $log->user ? $log->user->email : '-' }}</small>
+                                <strong style="font-size: 12px; color: #0f172a; font-weight: 700;">{{ $log->user ? $log->user->name : 'Sistem / Publik' }}</strong>
+                                <small style="color: #64748b; font-size: 10px;">{{ $log->user ? $log->user->email : '-' }}</small>
                             </td>
-                            <td style="font-family: monospace; color: var(--pd-accent); font-size: 11px;">
+                            <td style="font-family: monospace; color: #ea580c; font-size: 11.5px; font-weight: 600;">
                                 {{ $log->ip_address }}
                             </td>
                             <td style="text-align: right;">
@@ -99,13 +99,13 @@
                                         Lihat JSON
                                     </button>
                                 @else
-                                    <span style="color: var(--pd-dim); font-size: 10px;">-</span>
+                                    <span style="color: #94a3b8; font-size: 10px;">-</span>
                                 @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 48px 16px; color: var(--pd-dim);">
+                            <td colspan="6" style="text-align: center; padding: 48px 16px; color: #64748b; font-style: italic;">
                                 Belum ada aktivitas yang tercatat.
                             </td>
                         </tr>

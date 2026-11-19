@@ -99,7 +99,7 @@
         <div class="pd-panel" style="padding: 24px;">
             <div class="pd-panel-heading">
                 <div>
-                    <h2 style="color: #ffd280;">Pemulihan Database (Restore)</h2>
+                    <h2 style="color: #b45309; font-weight: 800;">Pemulihan Database (Restore)</h2>
                     <p>Unggah file SQL cadangan untuk memulihkan seluruh struktur dan data</p>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     <span class="pd-hint">Maksimal ukuran file 50 MB, format murni .sql.</span>
                 </div>
 
-                <div style="padding: 10px 12px; border-radius: 8px; background: rgba(239,68,68,.08); border: 1px dashed rgba(239,68,68,.25); font-size: 10px; color: #ffaaa4; line-height: 1.5;">
+                <div style="padding: 10px 12px; border-radius: 8px; background: #fef2f2; border: 1px dashed #fca5a5; font-size: 11px; color: #dc2626; font-weight: 600; line-height: 1.5;">
                     ⚠️ Tindakan ini berisiko tinggi. Pastikan file cadangan berasal dari sistem ini.
                 </div>
 

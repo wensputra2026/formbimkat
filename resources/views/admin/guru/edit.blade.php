@@ -4,7 +4,7 @@
 @section('page_title', 'Koreksi Data Guru')
 
 @section('content')
-<div style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+<div style="width: 100%; display: flex; flex-direction: column; gap: 20px;">
 
     <!-- Action Bar -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -34,7 +34,7 @@
         <!-- Bagian 1: Identitas -->
         <div>
             <div style="padding-bottom: 10px; border-bottom: 1px solid var(--pd-border); margin-bottom: 16px;">
-                <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: #f4f5f7;">1. Identitas Guru</h3>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 800; color: #0f172a;">1. Identitas Guru</h3>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
                 <div style="grid-column: 1 / -1;">
@@ -55,7 +55,7 @@
         <!-- Bagian 2: Pangkat & TPG -->
         <div>
             <div style="padding-bottom: 10px; border-bottom: 1px solid var(--pd-border); margin-bottom: 16px;">
-                <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: #f4f5f7;">2. Pangkat & Kategori TPG</h3>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 800; color: #0f172a;">2. Pangkat & Kategori TPG</h3>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
                 <div>
@@ -85,7 +85,7 @@
         <!-- Bagian 3: Gaji Pokok, KGB & Pensiun -->
         <div>
             <div style="padding-bottom: 10px; border-bottom: 1px solid var(--pd-border); margin-bottom: 16px;">
-                <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: #f4f5f7;">3. Gaji Pokok, KGB & Pensiun</h3>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 800; color: #0f172a;">3. Gaji Pokok, KGB & Pensiun</h3>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
                 <div>
@@ -120,7 +120,7 @@
         <!-- Bagian 4: Sekolah Tempat Tugas -->
         <div>
             <div style="padding-bottom: 10px; border-bottom: 1px solid var(--pd-border); margin-bottom: 16px;">
-                <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: #f4f5f7;">4. Sekolah / Tempat Tugas</h3>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 800; color: #0f172a;">4. Sekolah / Tempat Tugas</h3>
             </div>
             <div x-data="schoolSearch('{{ old('sekolah_nama', $guru->sekolah ? $guru->sekolah->nama_sekolah : '') }}', '{{ old('sekolah_id', $guru->sekolah_id) }}')" style="position: relative;">
                 <input type="hidden" name="sekolah_id" :value="selectedId" required>

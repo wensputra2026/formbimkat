@@ -44,12 +44,12 @@
                 <tbody>
                     @forelse($pangkats as $p)
                         <tr>
-                            <td style="text-align: center; color: var(--pd-dim); font-family: monospace;">{{ $p->urutan }}</td>
+                            <td style="text-align: center; color: #64748b; font-family: monospace; font-weight: 700;">{{ $p->urutan }}</td>
                             <td>
-                                <strong style="font-size: 13px; color: var(--pd-accent); font-family: monospace;">{{ $p->golongan }}</strong>
+                                <strong style="font-size: 13.5px; color: #ea580c; font-family: monospace; font-weight: 800;">{{ $p->golongan }}</strong>
                             </td>
                             <td>
-                                <strong style="font-size: 12px; color: #f4f5f7;">{{ $p->pangkat }}</strong>
+                                <strong style="font-size: 13px; color: #0f172a; font-weight: 700;">{{ $p->pangkat }}</strong>
                             </td>
                             <td style="text-align: center;">
                                 <span class="pd-badge is-info">{{ $p->gurus_count }} Orang</span>
