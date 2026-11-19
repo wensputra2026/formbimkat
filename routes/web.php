@@ -70,6 +70,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // CATATAN: TIDAK ADA ROUTE CREATE / STORE MANUAL ADMIN!
     // Seluruh data hanya berasal dari formulir pendataan publik.
     Route::get('/guru', [GuruController::class, 'index'])->name('guru.index');
+    Route::get('/guru/export-excel', [GuruController::class, 'exportExcel'])->name('guru.export_excel');
     Route::get('/guru/{id}', [GuruController::class, 'show'])->name('guru.show');
     Route::get('/guru/{guru}/edit', [GuruController::class, 'edit'])->name('guru.edit');
     Route::put('/guru/{guru}', [GuruController::class, 'update'])->name('guru.update');

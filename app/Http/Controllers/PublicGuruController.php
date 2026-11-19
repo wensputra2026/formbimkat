@@ -111,13 +111,12 @@ class PublicGuruController extends Controller
         $error = null;
 
         if ($request->isMethod('post')) {
-            $request->validate([
-                'identitas' => ['required', 'string'],
-            ], [
-                'identitas.required' => 'NIP, NIK, atau Nomor Registrasi wajib diisi.',
-            ]);
+            $input = trim((string)($request->input('identitas') ?? $request->input('nomor_registrasi', '')));
 
-            $input = trim((string)$request->input('identitas'));
+            if (empty($input)) {
+                return back()->withErrors(['identitas' => 'NIP, NIK, atau Nomor Registrasi wajib diisi.']);
+            }
+
             $cleanNumeric = preg_replace('/[^0-9]/', '', $input);
 
             $guru = Guru::with(['sekolah', 'pangkatGolongan'])
@@ -130,8 +129,19 @@ class PublicGuruController extends Controller
                 ->orWhere('nik', $input)
                 ->first();
 
+            if ($guru && $request->filled('digit_verifikasi')) {
+                $last4Nip = $guru->nip ? substr($guru->nip, -4) : '';
+                $last4Nik = $guru->nik ? substr($guru->nik, -4) : '';
+                if ($request->input('digit_verifikasi') !== $last4Nip && $request->input('digit_verifikasi') !== $last4Nik) {
+                    $guru = null;
+                    $error = '4 digit terakhir NIP/NIK verifikasi tidak sesuai.';
+                }
+            }
+
             if (!$guru) {
-                $error = "Data guru dengan identitas \"{$input}\" tidak ditemukan dalam sistem. Pastikan NIP atau NIK Anda sudah benar, atau silakan lakukan pengisian formulir pendataan terlebih dahulu.";
+                if (!$error) {
+                    $error = "Data guru dengan identitas \"{$input}\" tidak ditemukan dalam sistem. Pastikan NIP atau NIK Anda sudah benar, atau silakan lakukan pengisian formulir pendataan terlebih dahulu.";
+                }
             } else {
                 // Berhasil verifikasi - simpan otorisasi di session
                 session(['guru_edit_auth_' . $guru->nomor_registrasi => true]);
@@ -139,8 +149,8 @@ class PublicGuruController extends Controller
                 $guruResult = [
                     'nomor_registrasi' => $guru->nomor_registrasi,
                     'nama' => $guru->nama,
-                    'nip' => $guru->nip ?: '-',
-                    'nik' => $guru->nik ?: '-',
+                    'nip' => $guru->nip ? substr($guru->nip, 0, 4) . '********' . substr($guru->nip, -4) : '-',
+                    'nik' => $guru->nik ? substr($guru->nik, 0, 4) . '********' . substr($guru->nik, -4) : '-',
                     'nama_sekolah' => $guru->sekolah ? $guru->sekolah->nama_sekolah : '-',
                     'pangkat' => $guru->pangkatGolongan ? $guru->pangkatGolongan->label : '-',
                     'status_verifikasi' => $guru->status_verifikasi,

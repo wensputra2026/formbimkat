@@ -444,6 +444,16 @@ class PendataanGuruTest extends TestCase
     }
 
     /**
+     * 21b. Export Excel Semua Data Guru (Single Sheet Tanpa 6 Sheet)
+     */
+    public function test_21b_export_excel_single_sheet_all_data(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/guru/export-excel?tab=semua');
+        $response->assertStatus(200);
+        $response->assertHeader('content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    }
+
+    /**
      * 22. Riwayat Login Admin
      */
     public function test_22_riwayat_login_admin(): void

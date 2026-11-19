@@ -9,6 +9,7 @@ use App\Models\Guru;
 use App\Models\GuruHistory;
 use App\Models\PangkatGolongan;
 use App\Models\Sekolah;
+use App\Services\ExcelExportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -84,6 +85,66 @@ class GuruController extends Controller
         $kabupatens = Sekolah::distinct()->whereNotNull('kabupaten')->pluck('kabupaten');
 
         return view('admin.guru.index', compact('gurus', 'counts', 'statusTab', 'pangkats', 'kabupatens'));
+    }
+
+    /**
+     * Export Excel Semua Data Guru (Single Sheet / Tanpa 6 Sheet)
+     */
+    public function exportExcel(Request $request, ExcelExportService $exportService)
+    {
+        $statusTab = $request->query('tab', 'semua');
+
+        $query = Guru::with(['sekolah', 'pangkatGolongan', 'verifier']);
+
+        if ($statusTab === 'trash') {
+            $query->onlyTrashed();
+        } else {
+            if ($statusTab === 'pending') {
+                $query->where('status_verifikasi', 'Menunggu Verifikasi');
+            } elseif ($statusTab === 'approved') {
+                $query->where('status_verifikasi', 'Disetujui');
+            } elseif ($statusTab === 'rejected') {
+                $query->where('status_verifikasi', 'Ditolak');
+            }
+        }
+
+        // Search
+        if ($search = trim((string)$request->query('q', ''))) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nip', 'like', "%{$search}%")
+                  ->orWhere('nik', 'like', "%{$search}%")
+                  ->orWhere('nomor_registrasi', 'like', "%{$search}%");
+            });
+        }
+
+        // Filters
+        if ($sekolahId = $request->query('sekolah_id')) {
+            $query->where('sekolah_id', $sekolahId);
+        }
+        if ($pangkatId = $request->query('pangkat_id')) {
+            $query->where('pangkat_golongan_id', $pangkatId);
+        }
+        if ($tpg = $request->query('tpg')) {
+            $query->where('penerima_tpg', $tpg);
+        }
+        if ($statusFilter = $request->query('status')) {
+            $query->where('status_verifikasi', $statusFilter);
+        }
+        if ($kabupaten = $request->query('kabupaten')) {
+            $query->whereHas('sekolah', function ($q) use ($kabupaten) {
+                $q->where('kabupaten', $kabupaten);
+            });
+        }
+
+        $query->orderBy('nama');
+
+        ActivityLog::log(
+            'export_excel',
+            "Admin " . (Auth::user()?->name ?? 'System') . " melakukan EXPORT EXCEL SEMUA DATA GURU (1 Sheet)"
+        );
+
+        return $exportService->exportSingleSheet($query, 'Semua Data Guru');
     }
 
     /**

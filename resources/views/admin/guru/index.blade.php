@@ -14,8 +14,12 @@
             <p>Seluruh data guru bersumber langsung dari formulir mandiri yang diisi oleh guru bersangkutan.</p>
         </div>
         <div class="pd-heading-actions">
-            <a href="{{ route('admin.report.export_excel') }}" class="pd-button pd-button-primary">
-                <span>EXPORT EXCEL (6 SHEET)</span>
+            <a href="{{ route('admin.guru.export_excel', request()->query()) }}" class="pd-button pd-button-primary" style="background: linear-gradient(135deg, #15803d, #16a34a); box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);" title="Export seluruh data guru ke dalam satu sheet Excel">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>EXPORT EXCEL (SEMUA DATA)</span>
+            </a>
+            <a href="{{ route('admin.report.export_excel') }}" class="pd-button pd-button-secondary" title="Export data terbagi dalam 6 sheet kategori TPG">
+                <span>Export 6 Sheet</span>
             </a>
         </div>
     </div>
